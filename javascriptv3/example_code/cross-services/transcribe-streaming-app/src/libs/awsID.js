@@ -11,5 +11,6 @@ Inputs (replace in code):
 - REGION // Amazon region (e.g. us-west-2)
 - IDENTITY_POOL_ID - an Amazon Cognito Identity Pool ID.
 */
-export const REGION = "REGION"; 
-export const IDENTITY_POOL_ID = "IDENTITY_POOL_ID"; 
+export const REGION = "ap-northeast-1";
+export const IDENTITY_POOL_ID =
+  "ap-northeast-1:5e21664f-1be9-4a8e-978a-cbfb18f56e2b";
