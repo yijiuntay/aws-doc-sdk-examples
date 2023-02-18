@@ -21,15 +21,15 @@ let microphoneStream = undefined;
 let transcribeClient = undefined;
 
 export const startRecording = async (language, callback) => {
-    if (!language) {
-      return false;
-    }
-    if (microphoneStream || transcribeClient) {
-      stopRecording();
-    }
-    createTranscribeClient();
-    createMicrophoneStream();
-    await startStreaming(language, callback);
+  if (!language) {
+    return false;
+  }
+  if (microphoneStream || transcribeClient) {
+    stopRecording();
+  }
+  createTranscribeClient();
+  createMicrophoneStream();
+  await startStreaming(language, callback);
 };
 
 export const stopRecording = function () {
@@ -52,7 +52,7 @@ const createTranscribeClient = () => {
       identityPoolId: awsID.IDENTITY_POOL_ID,
     }),
   });
-}
+};
 
 const createMicrophoneStream = async () => {
   microphoneStream = new MicrophoneStream.default();
@@ -62,7 +62,7 @@ const createMicrophoneStream = async () => {
       audio: true,
     })
   );
-}
+};
 
 const startStreaming = async (language, callback) => {
   const command = new StartStreamTranscriptionCommand({
@@ -76,14 +76,16 @@ const startStreaming = async (language, callback) => {
     for (const result of event.TranscriptEvent.Transcript.Results || []) {
       if (result.IsPartial === false) {
         const noOfResults = result.Alternatives[0].Items.length;
+        const newLine = [];
         for (let i = 0; i < noOfResults; i++) {
           console.log(result.Alternatives[0].Items[i].Content);
-          callback(result.Alternatives[0].Items[i].Content + " ");
+          newLine.push(result.Alternatives[0].Items[i].Content);
         }
+        callback(newLine.join(" "));
       }
     }
   }
-}
+};
 
 const getAudioStream = async function* () {
   for await (const chunk of microphoneStream) {
